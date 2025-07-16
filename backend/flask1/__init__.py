@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:iposteatu9@localh
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'users.login'
+login_manager.login_view = 'users.routes.login'
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
