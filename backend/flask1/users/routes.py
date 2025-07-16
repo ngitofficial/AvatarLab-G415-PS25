@@ -26,12 +26,14 @@ def register():
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     new_user = User(username=username, email=email, password=hashed_password)
-    db.session.add(new_user)
 
-    db.session.commit()
-    db.session.rollback()
-
-    return jsonify({'message': 'User registered successfully'}), 201
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({'message': 'User registered successfully'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Registration failed', 'details': str(e)}), 500
 
 
 @users.route("/login", methods=['POST'])
